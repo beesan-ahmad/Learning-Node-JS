@@ -2,6 +2,7 @@ const { listeners } = require('process');
 const readline = require ('readline');
  const fs = require('fs');
 const { isUtf8 } = require('buffer');
+const http = require('http');
 //****************************** */
 //  how to read input from the user
 /*const rl = readline.createInterface({
@@ -27,7 +28,7 @@ let content = `data read from input file:${textIn} \nDate created: ${new Date()}
 fs.writeFileSync('./Files/output.txt',content);*/
 //****************************
 //Reading and writing from the file asynchronously
-fs.readFile('./Files/start.txt','utf-8',
+/*fs.readFile('./Files/start.txt','utf-8',
  (error1,data1)=> {
     console.log(data1)
     fs.readFile(`./Files/${data1}.txt`,'utf-8',(error2,data2)=>{//read the content of input.txt file
@@ -42,5 +43,16 @@ fs.readFile('./Files/start.txt','utf-8',
 });/*we see the shape of the code looks like triangle that means we have a callback help(
 when we call a callback function inside another callback function...etc we can avoid it by
 using async await or promise
-)*/
-console.log('Reading File......');
+)
+console.log('Reading File......');*/
+//*************************** 
+//create a simple web server
+// Step 1:create a server
+const server = http.createServer((request,response)=>{
+    console.log('A new request received');
+    response.end('Hello from the server!');
+})
+// Step 2:start the server
+server.listen(8000,'127.0.0.1',()=>{
+    console.log('server has started');
+})
