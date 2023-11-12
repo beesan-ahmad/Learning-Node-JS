@@ -48,9 +48,10 @@ console.log('Reading File......');*/
 //*************************** 
 //create a simple web server
 // Step 1:create a server
+const html = fs.readFileSync('./Template/index.html','utf-8')
 const server = http.createServer((request,response)=>{
     console.log('A new request received');
-    response.end('Hello from the server!');
+    response.end(html);
 })
 // Step 2:start the server
 server.listen(8000,'127.0.0.1',()=>{
