@@ -48,7 +48,8 @@ console.log('Reading File......');*/
 //*************************** 
 //create a simple web server
 // Step 1:create a server
-const html = fs.readFileSync('./Template/index.html','utf-8')
+const html = fs.readFileSync('./Template/index.html','utf-8');
+let products = JSON.parse(fs.readFileSync('./Data/products.json','utf-8'));//return json data and convert it to a javascript object
 const server = http.createServer((request,response)=>{
    let path = request.url;
     if (path === '/' || path.toLocaleLowerCase() === '/home') {
@@ -74,11 +75,9 @@ const server = http.createServer((request,response)=>{
 
     }else if(path.toLocaleLowerCase() === '/products'){
         response.writeHead(200,{
-            'Content-Type' : 'application/json'
-        });
-        fs.readFile('./Data/products.json','utf-8', (error,data)=>{//this wil read the json file every time we make a request for products in the url
-            response.end(data);
-        });
+            'Content-Type' : 'application/json'});
+        response.end('You are in product page');
+        console.log(products);
      } else{
         response.writeHead(404 ,{
             'Content-Type' : 'text/html',
