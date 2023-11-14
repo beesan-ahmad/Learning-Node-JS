@@ -52,7 +52,7 @@ const html = fs.readFileSync('./Template/index.html','utf-8')
 const server = http.createServer((request,response)=>{
    let path = request.url;
     if (path === '/' || path.toLocaleLowerCase() === '/home') {
-        response.end('you are in home page');
+        response.end(html);
     } else if (path.toLocaleLowerCase() === '/about') {
         response.end('you are in about page');
     }else if (path.toLocaleLowerCase() === '/contact') {
