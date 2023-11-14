@@ -72,7 +72,14 @@ const server = http.createServer((request,response)=>{
         });
         response.end(html.replace('{{%CONTENT%}}','You are in contact page'));
 
-    }else{
+    }else if(path.toLocaleLowerCase() === '/products'){
+        response.writeHead(200,{
+            'Content-Type' : 'application/json'
+        });
+        fs.readFile('./Data/products.json','utf-8', (error,data)=>{//this wil read the json file every time we make a request for products in the url
+            response.end(data);
+        });
+     } else{
         response.writeHead(404 ,{
             'Content-Type' : 'text/html',
             'my-header': 'Hello, world'
