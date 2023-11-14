@@ -52,13 +52,13 @@ const html = fs.readFileSync('./Template/index.html','utf-8')
 const server = http.createServer((request,response)=>{
    let path = request.url;
     if (path === '/' || path.toLocaleLowerCase() === '/home') {
-        response.end(html);
+        response.end(html.replace('{{%CONTENT%}}','You are in home page'));
     } else if (path.toLocaleLowerCase() === '/about') {
-        response.end('you are in about page');
+        response.end(html.replace('{{%CONTENT%}}','You are in about page'))
     }else if (path.toLocaleLowerCase() === '/contact') {
-        response.end('you are in contact page');
+        response.end(html.replace('{{%CONTENT%}}','You are in contact page'))
     }else{
-        response.end('Error 404:page not found');
+        response.end(html.replace('{{%CONTENT%}}','Error 404:page not found'))
     }
 })
 // Step 2:start the server
