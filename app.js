@@ -52,13 +52,32 @@ const html = fs.readFileSync('./Template/index.html','utf-8')
 const server = http.createServer((request,response)=>{
    let path = request.url;
     if (path === '/' || path.toLocaleLowerCase() === '/home') {
+        response.writeHead(200,{
+            'Content-Type' : 'text/html',
+            'my-header': 'Hello, world'
+        });
         response.end(html.replace('{{%CONTENT%}}','You are in home page'));
+
     } else if (path.toLocaleLowerCase() === '/about') {
-        response.end(html.replace('{{%CONTENT%}}','You are in about page'))
+        response.writeHead(200,{
+            'Content-Type' : 'text/html',
+            'my-header': 'Hello, world'
+        });
+        response.end(html.replace('{{%CONTENT%}}','You are in about page'));
+
     }else if (path.toLocaleLowerCase() === '/contact') {
-        response.end(html.replace('{{%CONTENT%}}','You are in contact page'))
+        response.writeHead(200,{
+            'Content-Type' : 'text/html',
+            'my-header': 'Hello, world'
+        });
+        response.end(html.replace('{{%CONTENT%}}','You are in contact page'));
+
     }else{
-        response.end(html.replace('{{%CONTENT%}}','Error 404:page not found'))
+        response.writeHead(404 ,{
+            'Content-Type' : 'text/html',
+            'my-header': 'Hello, world'
+        });
+        response.end(html.replace('{{%CONTENT%}}','Error 404:page not found'));
     }
 })
 // Step 2:start the server
