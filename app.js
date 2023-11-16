@@ -51,6 +51,17 @@ console.log('Reading File......');*/
 const html = fs.readFileSync('./Template/index.html','utf-8');
 let products = JSON.parse(fs.readFileSync('./Data/products.json','utf-8'));//return json data and convert it to a javascript object
 productListHtml = fs.readFileSync('./Template/product-list.html','utf-8');
+let productsHtmlArray = products.map((prod) => {
+let output = productListHtml.replace('{{%IMAGE%}}',prod.productImage);
+output = output.replace('{{%NAME%}}',prod.name);
+output = output.replace('{{%MODELNAME%}}',prod.modeName);
+output = output.replace('{{%MODELNO%}}',prod.modelNumber);
+output = output.replace('{{%SIZE%}}',prod.size);
+output = output.replace('{{%CAMERA%}}',prod.camera);
+output = output.replace('{{%PRICE%}}',prod.price);
+output = output.replace('{{%COLOR%}}',prod.color);
+return output;
+});
 const server = http.createServer((request,response)=>{
    let path = request.url;
     if (path === '/' || path.toLocaleLowerCase() === '/home') {
@@ -75,10 +86,11 @@ const server = http.createServer((request,response)=>{
         response.end(html.replace('{{%CONTENT%}}','You are in contact page'));
 
     }else if(path.toLocaleLowerCase() === '/products'){
+        let productResponseHtml = html.replace('{{%CONTENT%}}',productsHtmlArray.join(','));
         response.writeHead(200,{
-            'Content-Type' : 'application/json'});
-        response.end('You are in product page');
-        console.log(products);
+            'Content-Type' : 'text/html'});
+        response.end(productResponseHtml);
+       // console.log(productsHtmlArray.join(','));//elements separated by comma as a separator(this method will remove all commas from the array and return them as html content)
      } else{
         response.writeHead(404 ,{
             'Content-Type' : 'text/html',
