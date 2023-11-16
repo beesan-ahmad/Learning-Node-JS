@@ -50,6 +50,7 @@ console.log('Reading File......');*/
 // Step 1:create a server
 const html = fs.readFileSync('./Template/index.html','utf-8');
 let products = JSON.parse(fs.readFileSync('./Data/products.json','utf-8'));//return json data and convert it to a javascript object
+productListHtml = fs.readFileSync('./Template/product-list.html','utf-8');
 const server = http.createServer((request,response)=>{
    let path = request.url;
     if (path === '/' || path.toLocaleLowerCase() === '/home') {
@@ -57,7 +58,7 @@ const server = http.createServer((request,response)=>{
             'Content-Type' : 'text/html',
             'my-header': 'Hello, world'
         });
-        response.end(html.replace('{{%CONTENT%}}','You are in home page'));
+        response.end(html.replace('{{%CONTENT%}}',productListHtml));
 
     } else if (path.toLocaleLowerCase() === '/about') {
         response.writeHead(200,{
